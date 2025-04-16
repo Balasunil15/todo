@@ -37,10 +37,22 @@ async function updateTODO(id, title, description) {
   return res;
 }
 
+async function deleteMultipleTODO(ids) {
+  const res = await todomodel.deleteMany({ _id: { $in: ids } }); // Use $in to match multiple IDs
+  return res;
+}
+
+async function createMultipleTODO(todos) {
+  const res = await todomodel.insertMany(todos); // Insert an array of todos
+  return res;
+}
+
 module.exports = {
   createTODO,
   deleteTODO,
   updateTODO,
   getTODO,
-  pageTODO
+  pageTODO,
+  deleteMultipleTODO,
+  createMultipleTODO
 };
