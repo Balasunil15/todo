@@ -1,7 +1,5 @@
 const express = require('express'); 
-const { createTODO } = require('../models/todo');
-const { updateTODO } = require('../models/todo');
-const { deleteTODO } = require('../models/todo');
+const { createTODO,updateTODO , deleteTODO,getTODO} = require('../models/todo');
 const router = express.Router();
 router.post('/',async (req,res)=>{
     const {title,description} = req.body
@@ -20,5 +18,10 @@ router.delete('/:id',async (req,res)=>{
     const _id = req.params.id
     const resp = await deleteTODO(_id)
     res.send(resp)
+})
+
+router.get('/',async (req,res)=>{
+    const todos = await getTODO()
+    res.send(todos)
 })
 module.exports = router;

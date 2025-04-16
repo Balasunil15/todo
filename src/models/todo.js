@@ -1,31 +1,39 @@
-const mongoose = require('mongoose');
-const todoschemea = new mongoose.Schema({
-  title: String
-    ,description: String,
-},{
+const mongoose = require("mongoose");
+const todoschemea = new mongoose.Schema(
+  {
+    title: String,
+    description: String,
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
+const todomodel = mongoose.model("todo", todoschemea);
 
-const todomodel = mongoose.model('todo', todoschemea);
+async function getTODO() {
+  const todos = await todomodel.find();
+  return todos;
+}
 
 async function createTODO(title, description) {
-    const todo = await todomodel.create({title, description});
+  const todo = await todomodel.create({ title, description });
   return todo;
 }
 
 async function deleteTODO(id) {
-    const res = await todomodel.deleteOne({id});
+  const res = await todomodel.deleteOne({ id });
   return res;
 }
 
 async function updateTODO(id, title, description) {
-    const res = await todomodel.updateOne({id}, {title, description});
+  const res = await todomodel.updateOne({ id }, { title, description });
   return res;
 }
 
 module.exports = {
-    createTODO,
-    deleteTODO,
-    updateTODO
-}
+  createTODO,
+  deleteTODO,
+  updateTODO,
+  getTODO
+};
