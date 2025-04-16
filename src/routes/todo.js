@@ -1,5 +1,5 @@
 const express = require('express'); 
-const { createTODO,updateTODO , deleteTODO,getTODO} = require('../models/todo');
+const { createTODO,updateTODO , deleteTODO,pageTODO} = require('../models/todo');
 const router = express.Router();
 router.post('/',async (req,res)=>{
     const {title,description} = req.body
@@ -20,8 +20,9 @@ router.delete('/:id',async (req,res)=>{
     res.send(resp)
 })
 
-router.get('/',async (req,res)=>{
-    const todos = await getTODO()
+router.get('/pages',async (req,res)=>{
+    const {page,limit} = req.body
+    const todos = await pageTODO(page,limit)
     res.send(todos)
 })
 module.exports = router;

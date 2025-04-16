@@ -21,8 +21,14 @@ async function createTODO(title, description) {
   return todo;
 }
 
+async function pageTODO(page,limit){
+  const skip = (page-1)*limit
+  const pages=await todomodel.find().skip(Number(skip)).limit(Number(limit));
+  return pages;
+}
+
 async function deleteTODO(id) {
-  const res = await todomodel.deleteOne({ id });
+  const res = await todomodel.deleteOne({ _id: id }); // Use _id instead of id
   return res;
 }
 
@@ -35,5 +41,6 @@ module.exports = {
   createTODO,
   deleteTODO,
   updateTODO,
-  getTODO
+  getTODO,
+  pageTODO
 };
